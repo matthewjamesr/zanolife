@@ -1,0 +1,33 @@
+.zano-nav-logo {
+  height: 32px;
+  margin-top: 16px;
+  margin-right: 10px;
+}
+
+.hero {
+  margin: 75px 50px 75px 50px;
+  border-radius: 8px;
+}
+
+.hero .lead {
+  font-size: 16pt;
+}
+
+.hero .lead span {
+  font-size: 24pt;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.hero p {
+  font-size: 16pt;
+  margin: 30px 0px 0px 0px;
+}
+
+.hero p b {
+  font-size: 20pt;
+}
+
+.content {
+  margin-top: 30px;
+}

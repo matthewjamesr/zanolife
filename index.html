@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Zano Life - Private Marketplace</title>
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/main.css"  media="screen,projection"/>
+  </head>
+  <body class="blue darken-3">
+    <div class="grey darken-4" id="app">
+      <nav>
+        <div class="nav-wrapper deep-purple accent-4">
+          <a href="#" class="brand-logo left">ZanoLife</a>
+          <ul id="nav-mobile" class="right show-on-small">
+            <li><a class="waves-effect waves-light btn purple accent-2">Create account</a></li>
+          </ul>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="https://zano.org"><img class="zano-nav-logo" src="img/zano-logo.svg" /><span style="position: relative; top: -10px;">Zano.org<span></a></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="row">
+        <div class="container grey darken-4">
+          <div class="col s12 m8 offset-m2 hero white-text">
+            <div class="lead"><span>Zano Life</span> allows users to buy and sell digital content for ZANO,
+              directly from the browser and without needing to utilize Zano Core.
+            </div>
+            <p>Current offers on-chain: <b>{{allOffersCount}}</b></p>
+          </div>
+        </div>
+      </div>
+      <div class="row blue darken-3 white-text">
+        <div class="container">
+          <div class="content hero col s12 m8 offset-m2">
+            <div class="lead"><span>Get smart</span> by learning more about listing
+              with Zano Life.
+            </div>
+            <div class="lead" style="margin-top: 15px;"><span>Get started</span> by registering an account,
+              funding with Zano, and listing your digital asset.
+            </div>
+            <p class="center-align" style="margin-top: 60px;"><a class="waves-effect waves-light btn-large purple accent-2">Create account</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="js/vue.min.js"></script>
+  <script src="js/materialize.min.js"></script>
+  <script src="js/main.js"></script>
+</html>
