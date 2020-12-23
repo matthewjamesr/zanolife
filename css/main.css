@@ -13,6 +13,26 @@
   font-size: 16pt;
 }
 
+.hero .lead a {
+  position: relative;
+  letter-spacing: 1px;
+  font-weight: bold;
+  text-decoration: underline;
+  text-underline-position: under;
+}
+
+.hero .lead a:link {
+ color: #18ffff;
+}
+
+.hero .lead a:visited {
+  color: #18ffff;
+}
+
+.hero .lead a:hover {
+  color: #e040fb;
+}
+
 .hero .lead span {
   font-size: 24pt;
   font-weight: bold;
