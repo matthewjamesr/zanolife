@@ -8,7 +8,7 @@ new Vue({
       getOffers: function () {
         var self = this
         var request = new XMLHttpRequest()
-        request.open('GET', 'http://104.236.43.169/zano/getmarketplaceoffers', true)
+        request.open('GET', 'https://api.zano.life/zano/getmarketplaceoffers', true)
         request.onload = function () {
           var data = JSON.parse(this.response)
 
