@@ -18,7 +18,7 @@
           <div class="lead"><span>Zano Life</span> allows users to buy and sell digital content for ZANO,
             directly from the browser and without needing to utilize Zano Core.
           </div>
-          <p>Current offers on-chain: <b>{{allOffersCount}}</b></p>
+          <CurrentOffers />
         </div>
       </div>
     </div>
@@ -39,7 +39,11 @@
 </template>
 <script>
   import VueJwtDecode from "vue-jwt-decode";
+  import CurrentOffers from "../components/zano/CurrentOffers";
   export default {
+    components: {
+      'CurrentOffers': CurrentOffers
+    },
     data() {
       return {
         user: {}
