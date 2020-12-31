@@ -8,7 +8,7 @@
           <li v-if="user.loggedIn == true"><a v-on:click="logUserOut()" class="waves-effect waves-light btn purple accent-2">Sign out</a></li>
         </ul>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><a href="https://zano.org"><img class="zano-nav-logo" src="../assets/zano-logo.svg" /><span style="position: relative; top: -10px;">Zano.org</span></a></li>
+          <li><a href="https://zano.org"><img class="zano-nav-logo" src="../assets/zano-logo.svg" /><span style="position: relative; top: -3px;">Zano.org</span></a></li>
         </ul>
       </div>
     </nav>
@@ -31,7 +31,7 @@
           <div class="lead" style="margin-top: 15px;"><span>Get started</span> by registering an account,
             funding with Zano, and listing your digital asset.
           </div>
-          <p v-if="user.loggedIn == false" class="center-align" style="margin-top: 60px;"><a class="waves-effect waves-light btn-large purple accent-2">Create account</a></p>
+          <p v-if="user.loggedIn == false" class="center-align" style="margin-top: 60px;"><router-link class="waves-effect waves-light btn-large purple accent-2" to="/register">Create account</router-link></p>
         </div>
       </div>
     </div>
@@ -74,9 +74,10 @@
 </script>
 <style scoped>
   .zano-nav-logo {
-  height: 32px;
-  margin-top: 16px;
-  margin-right: 10px;
+    position: relative;
+    top: 13px;
+    height: 40px;
+    margin-right: 10px;
   }
 
   .hero {
