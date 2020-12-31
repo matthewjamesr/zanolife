@@ -113,7 +113,7 @@ export default {
   }
 
   .container {
-    margin-top: 75px;
+    margin-top: 25px;
     border-radius: 6px;
     padding: 0px;
   }
