@@ -41,13 +41,15 @@
   import VueJwtDecode from "vue-jwt-decode";
   import CurrentOffers from "../components/zano/CurrentOffers";
   export default {
-    components: {
-      'CurrentOffers': CurrentOffers
-    },
     data() {
       return {
-        user: {}
+        user: {
+          loggedIn: false
+        }
       };
+    },
+    components: {
+      'CurrentOffers': CurrentOffers
     },
     methods: {
       getUserDetails() {
@@ -65,7 +67,7 @@
         this.$router.go();
       }
     },
-    created() {
+    mounted() {
       this.getUserDetails();
     }
   };

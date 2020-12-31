@@ -1,31 +1,26 @@
 <template>
-  <p>Current offers on-chain: <b>{{allOffersCount}}</b></p>
+  <p>Current offers on-chain: <b>{{offers}}</b></p>
 </template>
 <script>
 export default {
   name: "CurrentOffers",
   data() {
     return {
-      offers: 0
+      offers: "Scanning..."
     };
   },
   methods: {
     async getOffers() {
       try {
         let response = await this.$http.get("/zano/getmarketplaceoffers");
-        let token = response.data.token;
-        localStorage.setItem("jwt", token);
-        if (token) {
-          this.$swal("Success", "Login Successful", "success");
-          this.$router.push("/");
-        }
+        this.offers = response.data.total_offers;
       } catch (err) {
-        this.$swal("Error", "Something Went Wrong", "error");
+        this.$swal("Error", err, "error");
         console.log(err.response);
       }
     }
   },
-  created() {
+  mounted() {
     this.getOffers();
   }
 };

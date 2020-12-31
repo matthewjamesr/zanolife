@@ -7,7 +7,7 @@ import VueSwal from 'vue-swal';
 Vue.use(VueSwal);
 
 const base = axios.create({
-  baseURL: "http://localhost/"
+  baseURL: "https://api.zano.life/"
 });
 
 Vue.prototype.$http = base;

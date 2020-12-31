@@ -36,9 +36,25 @@
         </form>
       </div>
     </div>
+    <div class="loading">
+    </div>
+    <div class="loading-spinner center-align">
+      <div class="spinner preloader-wrapper big active">
+        <div class="spinner-layer spinner-red-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
+import $ from 'jquery';
 export default {
   data() {
     return {
@@ -50,6 +66,8 @@ export default {
   },
   methods: {
     async loginUser() {
+      $(".loading").toggle();
+      $(".loading-spinner").toggle();
       try {
         let response = await this.$http.post("/user/login", this.login);
         let token = response.data.token;
@@ -66,3 +84,28 @@ export default {
   }
 };
 </script>
+<style scoped>
+  .loading {
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.7;
+  }
+
+  .loading-spinner {
+    display: none;
+    position: absolute;
+    top: 45%;
+    left: 0px;
+    width: 100%;
+  }
+
+  .spinner {
+    display: ;
+    margin: 0px auto;
+  }
+</style>
