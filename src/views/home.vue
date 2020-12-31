@@ -1,5 +1,5 @@
 <template>
-  <div class="grey darken-4" id="app">
+  <div class="grey darken-4">
     <nav>
       <div class="nav-wrapper deep-purple accent-4">
         <a href="#" class="brand-logo left">ZanoLife</a>

@@ -1,41 +1,41 @@
 <template>
   <div class="container">
-    <div class="row">
-      <div class="col-lg-6 offset-lg-3 col-sm-10 offset-sm-1">
-        <form
-          class="text-center border border-primary p-5"
-          style="margin-top:70px;height:auto;padding-top:100px !important;"
-          @submit.prevent="loginUser"
-        >
-          <input
-            type="text"
-            id="email"
-            class="form-control mb-5"
-            placeholder="Email"
-            v-model="login.email"
-          />
-          <!-- Password -->
-          <input
-            type="password"
-            id="password"
-            class="form-control mb-5"
-            placeholder="Password"
-            v-model="login.password"
-          />
-          <p>
-            Dont have an account??<router-link to="/register"
-              >click here</router-link
-            >
-          </p>
-          <!-- Sign in button -->
-          <center>
-            <button class="btn btn-primary btn-block w-75 my-4" type="submit">
-              Sign in
-            </button>
-          </center>
-        </form>
+    <form @submit.prevent="loginUser">
+      <div class="row">
+        <div class="col s12 m8 l6 offset-m2 offset-l3 grey darken-4 white-text bevel z-depth-2">
+          <div class="row">
+            <div class="col">
+              <p class="lead">Welcome back!</p>
+              <p>Sign-in to your Zano.life account</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="email" type="text" class="validate" v-model="login.email">
+              <label for="email">Email</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="password" type="password" v-model="login.password">
+              <label for="password">Password</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12 m8 l6 offset-m2 offset-l3">
+              <button class="btn purple accent-2 waves-effect waves-light" type="submit" name="action">Submit
+                <i class="material-icons right">send</i>
+              </button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12 center-align">
+              <p>Not experienced the power of Zano.life yet? <router-link to="/register">Register now</router-link>.</p>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </form>
     <div class="loading">
     </div>
     <div class="loading-spinner center-align">
@@ -77,6 +77,8 @@ export default {
           this.$router.push("/");
         }
       } catch (err) {
+        $(".loading").toggle();
+        $(".loading-spinner").toggle();
         this.$swal("Error", "Something Went Wrong", "error");
         console.log(err.response);
       }
@@ -86,6 +88,7 @@ export default {
 </script>
 <style scoped>
   .loading {
+    z-index: +1;
     display: none;
     position: absolute;
     top: 0px;
@@ -97,6 +100,7 @@ export default {
   }
 
   .loading-spinner {
+    z-index: +2;
     display: none;
     position: absolute;
     top: 45%;
@@ -105,7 +109,32 @@ export default {
   }
 
   .spinner {
-    display: ;
     margin: 0px auto;
+  }
+
+  .container {
+    margin-top: 75px;
+    border-radius: 6px;
+    padding: 0px;
+  }
+
+  .bevel {
+    padding: 30px 40px 0px 40px;
+    border-radius: 6px;
+  }
+
+  p.lead {
+    font-size: 18pt;
+    font-weight: bold;
+    margin-top: 0px;
+    margin-bottom: -10px;
+  }
+
+  input {
+    color: #fff;
+  }
+
+  button {
+    width: 100%;
   }
 </style>

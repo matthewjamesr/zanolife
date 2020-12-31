@@ -3,6 +3,8 @@ import App from "./App.vue";
 import router from "./router";
 import axios from "axios";
 import "materialize-css/dist/css/materialize.min.css";
+import 'material-design-icons/iconfont/material-icons.css'
+import "materialize-css/dist/js/materialize.min.js";
 import VueSwal from 'vue-swal';
 Vue.use(VueSwal);
 
