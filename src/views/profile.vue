@@ -1,7 +1,7 @@
 <template>
-  <div class="profile grey darken-4">
+  <div class="profile">
     <navigation />
-    <div class="row">
+    <div class="row grey darken-4">
       <div class="container">
         <div class="col s12 m10 offset-m1 hero white-text">
           <div class="lead"><span>{{user.username}},</span>
@@ -12,6 +12,47 @@
               <div class="col s12 m6 data"><b>Email:</b> {{user.email}}</div>
               <div class="col s12 m6 data"><b>Confirmed?</b> {{confirmationText}}</div>
               <div class="col s12 data address"><b>Zano Address:</b> {{user.paymentAddress}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="container">
+        <div class="row">
+          <div class="col s12 m6" style="padding-left: 0px; padding-right: 0px;">
+            <div class="col s12 m6">
+              <div class="card-panel light-blue white-text">
+                <div class="cardCount center-align">
+                  Listed
+                  <p>{{listings.length}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col s12 m6">
+              <div class="card-panel light-blue white-text">
+                <div class="cardCount center-align">
+                  Sold
+                  <p>0</p>
+                </div>
+              </div>
+            </div>
+            <div class="col s12">
+              <div class="card-panel light-blue white-text">
+                <div class="cardCount center-align">
+                  Fees paid
+                  <p>$0 <span>0 ZANO</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col s12 m6" style="padding-left: 0px; padding-right: 0px;">
+            <div class="col s12">
+              <div class="card-panel purple accent-2 white-text">
+                <div class="cardCount">
+                  Create listing <i class="material-icons">open_in_new</i>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -31,7 +72,8 @@ export default {
       user: {
         loggedIn: false
       },
-      confirmationText: ""
+      confirmationText: "",
+      listings: 0
     };
   },
   methods: {
@@ -54,10 +96,22 @@ export default {
     logUserOut() {
       localStorage.removeItem("jwt");
       this.$router.go();
+    },
+    async getListings() {
+      try {
+        let response = await this.$http.post("/user/me/listings", {
+            ownerAddress: this.user.paymentAddress
+        });
+        this.listings = response.data
+      } catch (err) {
+        this.$swal("Error", err, "error");
+        console.log(err.response);
+      }
     }
   },
   mounted() {
     this.getUserDetails();
+    this.getListings();
   }
 };
 </script>
@@ -127,5 +181,25 @@ export default {
 
   .accountInfo .address {
     word-break: break-word;
+  }
+
+  .cardCount {
+    font-size: 16pt;
+    font-weight: bold;
+  }
+
+  .cardCount i {
+    float: right;
+    font-size: 24pt;
+  }
+
+  .cardCount p {
+    margin: 0px;
+    font-size: 26pt;
+  }
+
+  .cardCount p span {
+    font-weight: normal;
+    font-size: 14pt;
   }
 </style>
