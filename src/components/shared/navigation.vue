@@ -5,8 +5,8 @@
         <router-link class="brand-logo left" to="/">ZanoLife</router-link>
         <ul id="nav-mobile" class="right show-on-small">
           <li v-if="!user.loggedIn"><router-link class="waves-effect waves-light btn purple accent-2" to="/login">Login</router-link></li>
-          <li v-if="user.loggedIn && currentRoute != 'profile'"><router-link to="/me">{{user.username}}</router-link></li>
-          <li v-if="user.loggedIn && currentRoute == 'profile'" class="active"><router-link to="/me">{{user.username}}</router-link></li>
+          <li v-if="user.loggedIn && currentRoute != 'profile'"><router-link to="/me">My Profile</router-link></li>
+          <li v-if="user.loggedIn && currentRoute == 'profile'" class="active"><router-link to="/me">My Profile</router-link></li>
           <li v-if="user.loggedIn"><a v-on:click="logUserOut()" class="waves-effect waves-light btn purple accent-2">Sign out</a></li>
         </ul>
         <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-bottom: 0px;">
