@@ -26,6 +26,15 @@ const routes = [
     meta: {
       title: "Register | Zano Life - Private Marketplace"
     }
+  },
+  {
+    path: "/me",
+    name: "profile",
+    component: () => import("../views/profile.vue"),
+    meta: {
+      title: "Profile | Zano Life - Private Marketplace",
+      requiresAuth: true
+    }
   }
 ];
 
@@ -36,8 +45,17 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  window.document.title = to.meta.title;
-  next()
-})
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (localStorage.getItem("jwt") == null) {
+      next({
+        path: "/"
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
 
 export default router;
