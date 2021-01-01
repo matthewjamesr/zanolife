@@ -6,7 +6,7 @@
 </template>
 <script>
 import register from "@/components/auth/register";
-import Navigation from "@/components/navigation";
+import Navigation from "@/components/shared/navigation";
 export default {
   components: {
     register,

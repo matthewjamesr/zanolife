@@ -74,7 +74,7 @@ export default {
         localStorage.setItem("jwt", token);
         if (token) {
           this.$swal("Success", "Login Successful", "success");
-          this.$router.push("/");
+          this.$router.push("/me");
         }
       } catch (err) {
         $(".loading").toggle();

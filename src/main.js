@@ -12,6 +12,22 @@ const base = axios.create({
   baseURL: "https://api.zano.life/"
 });
 
+base.interceptors.request.use(
+  (config) => {
+    let token = localStorage.getItem('jwt');
+
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${ token }`;
+    }
+
+    return config;
+  },
+
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 Vue.prototype.$http = base;
 Vue.config.productionTip = false;
 
