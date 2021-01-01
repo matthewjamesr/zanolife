@@ -1,16 +1,20 @@
 <template>
-  <div class="register">
+  <div class="profile">
     <navigation />
-    <register />
   </div>
 </template>
 <script>
-import register from "@/components/auth/register";
 import Navigation from "@/components/shared/navigation";
 export default {
   components: {
-    register,
     Navigation
   }
 };
 </script>
+<style scoped>
+  .zano-nav-logo {
+    height: 32px;
+    margin-top: 16px;
+    margin-right: 10px;
+  }
+</style>

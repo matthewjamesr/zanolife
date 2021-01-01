@@ -6,7 +6,7 @@
 </template>
 <script>
 import login from "@/components/auth/login";
-import Navigation from "@/components/navigation";
+import Navigation from "@/components/shared/navigation";
 export default {
   components: {
     login,

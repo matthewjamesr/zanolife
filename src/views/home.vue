@@ -1,17 +1,6 @@
 <template>
   <div class="grey darken-4">
-    <nav>
-      <div class="nav-wrapper deep-purple accent-4">
-        <a href="#" class="brand-logo left">ZanoLife</a>
-        <ul id="nav-mobile" class="right show-on-small">
-          <li v-if="user.loggedIn == false"><router-link class="waves-effect waves-light btn purple accent-2" to="/login">Login</router-link></li>
-          <li v-if="user.loggedIn == true"><a v-on:click="logUserOut()" class="waves-effect waves-light btn purple accent-2">Sign out</a></li>
-        </ul>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><a href="https://zano.org"><img class="zano-nav-logo" src="../assets/zano-logo.svg" /><span style="position: relative; top: -3px;">Zano.org</span></a></li>
-        </ul>
-      </div>
-    </nav>
+    <Navigation />
     <div class="row">
       <div class="container grey darken-4">
         <div class="col s12 m8 offset-m2 hero white-text">
@@ -39,17 +28,19 @@
 </template>
 <script>
   import VueJwtDecode from "vue-jwt-decode";
-  import CurrentOffers from "../components/zano/CurrentOffers";
+  import CurrentOffers from "@/components/zano/CurrentOffers";
+  import Navigation from "@/components/shared/navigation";
   export default {
+    components: {
+      'CurrentOffers': CurrentOffers,
+      Navigation
+    },
     data() {
       return {
         user: {
           loggedIn: false
         }
       };
-    },
-    components: {
-      'CurrentOffers': CurrentOffers
     },
     methods: {
       getUserDetails() {
