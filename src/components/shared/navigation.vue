@@ -10,7 +10,7 @@
           <li v-if="user.loggedIn"><a v-on:click="logUserOut()" class="waves-effect waves-light btn purple accent-2">Sign out</a></li>
         </ul>
         <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-bottom: 0px;">
-          <li><a href="https://zano.org"><img class="zano-nav-logo" src="../../assets/zano-logo.svg" /><span style="position: relative; top: -3px;">Zano.org</span></a></li>
+          <li><a href="https://zano.org" target="_blank"><img class="zano-nav-logo" src="../../assets/zano-logo.svg" /><span style="position: relative; top: -3px;">Zano.org</span></a></li>
         </ul>
       </div>
     </nav>
