@@ -40,7 +40,12 @@ export default {
     },
     logUserOut() {
       localStorage.removeItem("jwt");
-      this.$router.go();
+      if (this.currentRoute != "home") {
+        this.$router.push("/");
+      } else {
+        this.$router.go();
+      }
+
     }
   },
   computed: {
