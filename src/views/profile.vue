@@ -20,7 +20,7 @@
     <div class="row">
       <div class="container">
         <div class="row">
-          <div class="col s12 m6" style="padding-left: 0px; padding-right: 0px;">
+          <div class="col s12 m6 hide-on-small-only" style="padding-left: 0px; padding-right: 0px;">
             <div class="col s12 m6">
               <div class="card-panel light-blue white-text">
                 <div class="cardCount center-align" id="listing">
@@ -66,7 +66,7 @@
             <div class="col s12">
               <div class="card-panel light-blue white-text">
                 <div class="cardCount center-align">
-                  Fees paid
+                  Gross income
                   <p>$0 <span>0 ZANO</span></p>
                 </div>
               </div>
@@ -77,6 +77,24 @@
               <div class="card-panel purple accent-2 white-text">
                 <div class="cardCount">
                   Create listing <i class="material-icons">open_in_new</i>
+                </div>
+              </div>
+            </div>
+            <div class="col s12">
+              <div class="card-panel grey darken-4 white-text">
+                <div class="row">
+                  <div class="col s12 accountDetail">Manage account</div>
+                  <div class="col s12">View more information regarding sales and
+                    listings, purchases, or <router-link to="/me/edit">modify your account</router-link>.
+                  </div>
+                </div>
+                <div class="row" style="margin-bottom: -15px;">
+                  <div class="col s12 m6">
+                    <button class="waves-effect waves-dark btn grey lighten-3 black-text fullWidth">Sales</button>
+                  </div>
+                  <div class="col s12 m6">
+                    <button class="waves-effect waves-dark btn grey lighten-3 black-text fullWidth">Listings</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -262,5 +280,15 @@ export default {
 
   .spinner-custom {
     border-color: #18ffff;
+  }
+
+  .accountDetail {
+    font-size: 16pt;
+    font-weight: bold;
+  }
+
+  .fullWidth {
+    width: 100%;
+    margin-bottom: 15px;
   }
 </style>
