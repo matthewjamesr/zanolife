@@ -25,7 +25,7 @@
               <div class="card-panel light-blue white-text">
                 <div class="cardCount center-align">
                   Listed
-                  <p>{{listings.length}}</p>
+                  <p>{{listingCount}}</p>
                 </div>
               </div>
             </div>
@@ -73,7 +73,7 @@ export default {
         loggedIn: false
       },
       confirmationText: "",
-      listings: 0
+      listingCount: 0
     };
   },
   methods: {
@@ -102,7 +102,7 @@ export default {
         let response = await this.$http.post("/user/me/listings", {
             ownerAddress: this.user.paymentAddress
         });
-        this.listings = response.data
+        this.listingCount = response.data.length;
       } catch (err) {
         this.$swal("Error", err, "error");
         console.log(err.response);
