@@ -4,7 +4,7 @@
     <div class="row grey darken-4">
       <div class="container">
         <div class="col s12 m10 offset-m1 hero white-text">
-          <div class="refresh valign-wrapper right grey lighten-3 black-text waves-effect waves-dark" v-on:click="getListingsAndSales">
+          <div class="refresh valign-wrapper right grey lighten-3 black-text waves-effect waves-dark hide-on-small-only" v-on:click="getListingsAndSales">
             <a class="tooltipped" data-position="bottom" data-tooltip="Resfresh data">
               <i class="material-icons black-text">refresh</i>
             </a>
