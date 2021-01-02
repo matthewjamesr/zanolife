@@ -67,7 +67,20 @@
               <div class="card-panel light-blue white-text">
                 <div class="cardCount center-align">
                   Gross income
-                  <p>$0 <span>0 ZANO</span></p>
+                  <p id="grossIncome">$0 <span>0 ZANO</span></p>
+                  <div class="loading-spinner center-align" id="income-spinner">
+                    <div class="spinner preloader-wrapper big active">
+                      <div class="spinner-layer spinner-custom">
+                        <div class="circle-clipper left">
+                          <div class="circle"></div>
+                        </div><div class="gap-patch">
+                          <div class="circle"></div>
+                        </div><div class="circle-clipper right">
+                          <div class="circle"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -234,8 +247,10 @@ export default {
     async getListingsAndSales() {
       window.$("#listingCount").css("display", "none");
       window.$("#saleCount").css("display", "none");
+      window.$("#grossIncome").css("display", "none");
       window.$("#listed-spinner").css("display", "block");
       window.$("#sale-spinner").css("display", "block");
+      window.$("#income-spinner").css("display", "block");
       try {
         let response = await this.$http.post("/user/me/listings", {
             ownerAddress: this.user.paymentAddress
@@ -253,8 +268,10 @@ export default {
 
         window.$("#listingCount").css("display", "block");
         window.$("#saleCount").css("display", "block");
+        window.$("#grossIncome").css("display", "block");
         window.$("#listed-spinner").css("display", "none");
         window.$("#sale-spinner").css("display", "none");
+        window.$("#income-spinner").css("display", "none");
       } catch (err) {
         this.$swal("Error", err, "error");
         console.log(err.response);
@@ -394,7 +411,7 @@ export default {
     font-size: 14pt;
   }
 
-  p#listingCount, p#saleCount {
+  p#listingCount, p#saleCount, p#grossIncome {
     display: none;
   }
 
