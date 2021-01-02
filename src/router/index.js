@@ -45,6 +45,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  document.title = to.meta.title;
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (localStorage.getItem("jwt") == null) {
       next({
