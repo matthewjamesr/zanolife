@@ -74,11 +74,13 @@
           </div>
           <div class="col s12 m6" style="padding-left: 0px; padding-right: 0px;">
             <div class="col s12">
-              <div class="card-panel purple accent-2 white-text">
-                <div class="cardCount">
-                  Create listing <i class="material-icons">open_in_new</i>
+              <a class="modal-trigger" href="#newListingModal">
+                <div class="card-panel purple accent-2 white-text">
+                  <div class="cardCount">
+                    Create listing <i class="material-icons">open_in_new</i>
+                  </div>
                 </div>
-              </div>
+              </a>
             </div>
             <div class="col s12">
               <div class="card-panel grey darken-4 white-text">
@@ -90,10 +92,10 @@
                 </div>
                 <div class="row" style="margin-bottom: -15px;">
                   <div class="col s12 m6">
-                    <button class="waves-effect waves-dark btn grey lighten-3 black-text fullWidth">Sales</button>
+                    <button class="waves-effect waves-dark btn grey lighten-4 black-text fullWidth">Sales</button>
                   </div>
                   <div class="col s12 m6">
-                    <button class="waves-effect waves-dark btn grey lighten-3 black-text fullWidth">Listings</button>
+                    <button class="waves-effect waves-dark btn grey lighten-4 black-text fullWidth">Listings</button>
                   </div>
                 </div>
               </div>
@@ -102,12 +104,97 @@
         </div>
       </div>
     </div>
+    <!-- modals -->
+    <div class="modal" id="newListingModal">
+      <div class="loading">
+      </div>
+      <div class="loading-spinner-listing center-align">
+        <div class="spinner preloader-wrapper big active">
+          <div class="spinner-layer spinner-custom">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <form @submit.prevent="submitListing">
+        <div class="modal-content">
+          <div class="row">
+            <div class="col s12">
+              <div class="title">Create listing</div>
+              <p>Listings incur a <b>$0.99</b> fee. <b>1.5%</b> of total cost per sale. It's that simple.</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12 m6">
+              <input id="title" type="text" class="validate" v-model="newListing.title">
+              <label for="title">Item title</label>
+            </div>
+            <div class="input-field col s12 m6">
+              <i class="material-icons prefix" for="category">textsms</i>
+              <div class="right-align" id="categoryHelp">See options</div>
+              <input type="text" id="category" class="autocomplete" v-model="newListing.category">
+              <label for="category">Category</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12 m4">
+              <input id="price" type="text" v-model="newListing.price">
+              <label for="price">Price USD</label>
+            </div>
+            <div class="input-field col s12 m8">
+              <textarea id="description" class="materialize-textarea" data-length="240" v-model="newListing.description"></textarea>
+              <label for="description">Item description</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <div class="file-field input-field">
+                <p>Select the file being sold. Please archive multiple-file uploads.</p>
+                <div class="btn grey darken-4 white-text">
+                  <span>File</span>
+                  <input type="file" name="item" id="item">
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path" type="text">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <div class="file-field input-field">
+                <p>Select up to four product images.</p>
+                <div class="btn grey darken-4 white-text">
+                  <span>File</span>
+                  <input type="file" multiple name="images" id="images">
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path" type="text">
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn purple accent-2 waves-effect waves-light" type="submit" name="action">Submit
+          <i class="material-icons right">send</i>
+        </button>
+      </div>
+      </form>
+    </div>
   </div>
 </template>
 <script>
-import $ from 'jquery';
 import VueJwtDecode from "vue-jwt-decode";
 import Navigation from "@/components/shared/navigation";
+
+window.$('#newListingModal').modal('open');
+
 export default {
   components: {
     Navigation
@@ -117,6 +204,7 @@ export default {
       user: {
         loggedIn: false
       },
+      newListing: {},
       confirmationText: "",
       listingCount: 0,
       salesCount: 0
@@ -144,6 +232,10 @@ export default {
       this.$router.go();
     },
     async getListingsAndSales() {
+      window.$("#listingCount").css("display", "none");
+      window.$("#saleCount").css("display", "none");
+      window.$("#listed-spinner").css("display", "block");
+      window.$("#sale-spinner").css("display", "block");
       try {
         let response = await this.$http.post("/user/me/listings", {
             ownerAddress: this.user.paymentAddress
@@ -159,19 +251,57 @@ export default {
         });
         this.salesCount = self.count;
 
-        $("#listingCount").toggle();
-        $("#saleCount").toggle();
-        $("#listed-spinner").toggle();
-        $("#sale-spinner").toggle();
+        window.$("#listingCount").css("display", "block");
+        window.$("#saleCount").css("display", "block");
+        window.$("#listed-spinner").css("display", "none");
+        window.$("#sale-spinner").css("display", "none");
       } catch (err) {
         this.$swal("Error", err, "error");
         console.log(err.response);
+      }
+    },
+    async submitListing() {
+      try {
+        window.$(".loading").toggle();
+        window.$(".loading-spinner-listing").toggle();
+        this.newListing.ownerAddress = this.user.paymentAddress;
+        let response = await this.$http.post("/listing/save", this.newListing);
+        if (response.status == 201) {
+          this.$swal("Listing created", `Finalize by visiting your listings
+            page via Manage Account`, "success");
+          window.$(".loading").toggle();
+          window.$(".loading-spinner-listing").toggle();
+          window.$("#newListingModal").modal("close");
+          this.getListingsAndSales();
+        }
+      } catch (err) {
+        let error = err.response;
+        if (error.status == 409) {
+          window.$(".loading").toggle();
+          window.$(".loading-spinner-listing").toggle();
+          this.$swal("Error", error.data.message, "error");
+        } else {
+          window.$(".loading").toggle();
+          window.$(".loading-spinner-listing").toggle();
+          this.$swal("Error", error.data.err.message, "error");
+        }
       }
     }
   },
   mounted() {
     this.getUserDetails();
     this.getListingsAndSales();
+    window.$(document).ready(function(){
+      window.$('.modal').modal();
+      window.$('input#description, textarea#description').characterCounter();
+      window.$('input.autocomplete').autocomplete({
+        data: {
+          "Apple": 'https://placehold.it/250x250',
+          "Microsoft": 'https://placehold.it/250x250',
+          "Google": 'https://placehold.it/250x250'
+        },
+      });
+    });
   }
 };
 </script>
@@ -254,6 +384,7 @@ export default {
   }
 
   .cardCount p {
+    display: none;
     margin: 0px;
     font-size: 26pt;
   }
@@ -290,5 +421,62 @@ export default {
   .fullWidth {
     width: 100%;
     margin-bottom: 15px;
+  }
+
+  .modal-content .title {
+    font-size: 20pt;
+    font-weight: bold;
+  }
+
+  .modal-content .row {
+    margin-bottom: 0px;
+  }
+
+  .modal-content #categoryHelp {
+    position: absolute;
+    top: 43px;
+    right: 10px;
+    font-size: 10pt;
+    margin-top: 0px;
+  }
+
+  .modal-footer {
+    padding-right: 20px;
+    padding-left: 20px;
+    margin-bottom: 10px;
+  }
+
+  .input-field input[type=text]:focus + label,  .materialize-textarea:focus:not([readonly]) + label {
+    color: #000 !important;
+  }
+
+  .input-field input[type=text]:focus, .materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid #000 !important;
+    box-shadow: 0 1px 0 0 #000 !important;
+  }
+
+  .loading {
+    z-index: +100;
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.7;
+  }
+
+  .loading-spinner-listing {
+    z-index: +100;
+    display: none;
+    position: absolute;
+    top: 45%;
+    left: 0px;
+    width: 100%;
+  }
+
+  .spinner {
+    margin: 0px auto;
   }
 </style>

@@ -4,10 +4,11 @@
   </div>
 </template>
 <script>
-import M from 'materialize-css'
+window.$ = window.jQuery = require('jquery');
+window.materialize = require('materialize-css');
 export default {
   mounted () {
-    M.AutoInit()
+    window.materialize.AutoInit()
   }
 }
 </script>
