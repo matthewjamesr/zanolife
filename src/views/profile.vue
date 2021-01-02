@@ -4,6 +4,11 @@
     <div class="row grey darken-4">
       <div class="container">
         <div class="col s12 m10 offset-m1 hero white-text">
+          <div class="refresh valign-wrapper right grey lighten-3 black-text waves-effect waves-dark" v-on:click="getListingsAndSales">
+            <a class="tooltipped" data-position="bottom" data-tooltip="Resfresh data">
+              <i class="material-icons black-text">refresh</i>
+            </a>
+          </div>
           <div class="lead"><span>{{user.username}},</span>
             <p>Welcome back to Zano.life</p>
           </div>
@@ -311,6 +316,7 @@ export default {
     window.$(document).ready(function(){
       window.$('.modal').modal();
       window.$('input#description, textarea#description').characterCounter();
+      window.$('.tooltipped').tooltip();
       window.$('input.autocomplete').autocomplete({
         data: {
           "Apple": 'https://placehold.it/250x250',
@@ -417,13 +423,15 @@ export default {
 
   .loading-spinner {
     left: 0px;
+    margin-top: 5px;
+    margin-bottom: -10px;
   }
 
   .spinner {
     margin: 10px auto;
     margin-bottom: -5.5px;
-    height: 40px;
-    width: 40px;
+    height: 50px;
+    width: 50px;
   }
 
   .spinner-custom {
@@ -495,5 +503,14 @@ export default {
 
   .spinner {
     margin: 0px auto;
+  }
+
+  .refresh {
+    padding: 5px 5px 0px 5px;
+    border-radius: 50%;
+  }
+
+  .refresh i {
+    font-size: 26pt;
   }
 </style>
