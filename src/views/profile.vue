@@ -23,17 +23,43 @@
           <div class="col s12 m6" style="padding-left: 0px; padding-right: 0px;">
             <div class="col s12 m6">
               <div class="card-panel light-blue white-text">
-                <div class="cardCount center-align">
+                <div class="cardCount center-align" id="listing">
                   Listed
-                  <p>{{listingCount}}</p>
+                  <p id="listingCount">{{listingCount}}</p>
+                  <div class="loading-spinner center-align" id="listed-spinner">
+                    <div class="spinner preloader-wrapper big active">
+                      <div class="spinner-layer spinner-custom">
+                        <div class="circle-clipper left">
+                          <div class="circle"></div>
+                        </div><div class="gap-patch">
+                          <div class="circle"></div>
+                        </div><div class="circle-clipper right">
+                          <div class="circle"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="col s12 m6">
               <div class="card-panel light-blue white-text">
                 <div class="cardCount center-align">
-                  Sold
-                  <p>0</p>
+                  Sales
+                  <p id="saleCount">{{salesCount}}</p>
+                  <div class="loading-spinner center-align" id="sale-spinner">
+                    <div class="spinner preloader-wrapper big active">
+                      <div class="spinner-layer spinner-custom">
+                        <div class="circle-clipper left">
+                          <div class="circle"></div>
+                        </div><div class="gap-patch">
+                          <div class="circle"></div>
+                        </div><div class="circle-clipper right">
+                          <div class="circle"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -61,6 +87,7 @@
   </div>
 </template>
 <script>
+import $ from 'jquery';
 import VueJwtDecode from "vue-jwt-decode";
 import Navigation from "@/components/shared/navigation";
 export default {
@@ -73,7 +100,8 @@ export default {
         loggedIn: false
       },
       confirmationText: "",
-      listingCount: 0
+      listingCount: 0,
+      salesCount: 0
     };
   },
   methods: {
@@ -97,12 +125,26 @@ export default {
       localStorage.removeItem("jwt");
       this.$router.go();
     },
-    async getListings() {
+    async getListingsAndSales() {
       try {
         let response = await this.$http.post("/user/me/listings", {
             ownerAddress: this.user.paymentAddress
         });
+
+        self.count = 0;
         this.listingCount = response.data.length;
+        response.data.forEach(function(listing) {
+          listing.purchasers.forEach(function() {
+            console.log("Sale found")
+            self.count++;
+          })
+        });
+        this.salesCount = self.count;
+
+        $("#listingCount").toggle();
+        $("#saleCount").toggle();
+        $("#listed-spinner").toggle();
+        $("#sale-spinner").toggle();
       } catch (err) {
         this.$swal("Error", err, "error");
         console.log(err.response);
@@ -111,7 +153,7 @@ export default {
   },
   mounted() {
     this.getUserDetails();
-    this.getListings();
+    this.getListingsAndSales();
   }
 };
 </script>
@@ -201,5 +243,24 @@ export default {
   .cardCount p span {
     font-weight: normal;
     font-size: 14pt;
+  }
+
+  p#listingCount, p#saleCount {
+    display: none;
+  }
+
+  .loading-spinner {
+    left: 0px;
+  }
+
+  .spinner {
+    margin: 10px auto;
+    margin-bottom: -5.5px;
+    height: 40px;
+    width: 40px;
+  }
+
+  .spinner-custom {
+    border-color: #18ffff;
   }
 </style>
