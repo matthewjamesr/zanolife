@@ -331,7 +331,7 @@ export default {
           let html = ''
           response.data.forEach(function(photo) {
             self.newListing.productPhotos.push(photo.filename);
-            html += '<div class="col s6 m3 uploadedImage"><i class="material-icons grey darken-4 white-text" style="position: relative; top: 35px; left: -10; margin: 0px; padding: 5px;">delete</i><img class="responsive-img" src="http://localhost/uploads/' + photo.filename + '" /></div>';
+            html += '<div class="col s6 m3 uploadedImage"><i class="material-icons grey darken-4 white-text" style="position: relative; top: 35px; left: -10; margin: 0px; padding: 5px;">delete</i><img class="responsive-img" src="https://api.zano.life/uploads/' + photo.filename + '" /></div>';
           })
           console.log(this.newListing.productPhotos)
           this.$swal("Success!", `Product file uploaded`, "success");
