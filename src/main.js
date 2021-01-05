@@ -9,7 +9,7 @@ import VueSwal from 'vue-swal';
 Vue.use(VueSwal);
 
 const base = axios.create({
-  baseURL: "https://api.zano.life/"
+  baseURL: "http://localhost/"
 });
 
 base.interceptors.request.use(
