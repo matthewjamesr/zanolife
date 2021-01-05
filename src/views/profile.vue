@@ -4,7 +4,7 @@
     <div class="row grey darken-4">
       <div class="container">
         <div class="col s12 m10 offset-m1 hero white-text">
-          <div class="refresh valign-wrapper right grey lighten-3 black-text waves-effect waves-dark" v-on:click="getListingsAndSales">
+          <div class="refresh valign-wrapper right grey lighten-3 black-text waves-effect waves-dark hide-on-small-only" v-on:click="getListingsAndSales">
             <a class="tooltipped" data-position="bottom" data-tooltip="Resfresh data">
               <i class="material-icons black-text">refresh</i>
             </a>
@@ -93,7 +93,7 @@
           <div class="col s12 m6" style="padding-left: 0px; padding-right: 0px;">
             <div class="col s12">
               <a class="modal-trigger" href="#newListingModal">
-                <div class="card-panel purple accent-2 white-text">
+                <div class="card-panel purple accent-2 white-text hoverable">
                   <div class="cardCount">
                     Create listing <i class="material-icons">open_in_new</i>
                   </div>
@@ -123,7 +123,7 @@
       </div>
     </div>
     <!-- modals -->
-    <div class="modal" id="newListingModal">
+    <div class="modal" id="newListingModal" style="width: 85%; max-width: 900px;">
       <div class="loading">
       </div>
       <div class="loading-spinner-listing center-align">
@@ -175,7 +175,7 @@
                 <p>Select the file being sold. Please archive multiple-file uploads.</p>
                 <div class="btn grey darken-4 white-text">
                   <span>File</span>
-                  <input type="file" name="item" id="item">
+                  <input type="file" name="productFile" id="productFile" ref="productFile" v-on:change="handleProductFileUpload()">
                 </div>
                 <div class="file-path-wrapper">
                   <input class="file-path" type="text">
@@ -189,13 +189,15 @@
                 <p>Select up to four product images.</p>
                 <div class="btn grey darken-4 white-text">
                   <span>File</span>
-                  <input type="file" multiple name="images" id="images">
+                  <input type="file" multiple name="photoFiles" id="photoFiles" ref="photoFiles" v-on:change="handlePhotoFileUpload()">
                 </div>
                 <div class="file-path-wrapper">
                   <input class="file-path" type="text">
                 </div>
               </div>
             </div>
+          </div>
+          <div class="row" v-html="displayImageHTML">
           </div>
       </div>
       <div class="modal-footer">
@@ -225,7 +227,10 @@ export default {
       newListing: {},
       confirmationText: "",
       listingCount: 0,
-      salesCount: 0
+      salesCount: 0,
+      productPhotos: [],
+      productFile: [],
+      displayImageHTML: ''
     };
   },
   methods: {
@@ -280,6 +285,61 @@ export default {
       } catch (err) {
         this.$swal("Error", err, "error");
         console.log(err.response);
+      }
+    },
+    async handleProductFileUpload () {
+      try {
+        this.newListing.productPhotos = [];
+        this.productFile = this.$refs.productFile.files[0];
+        let formData = new FormData();
+        formData.append('file', this.productFile);
+        let response = await this.$http.post('/listing/product/upload',
+          formData,
+          {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+          }
+        )
+        if (response.status == 200) {
+          this.newListing.productFile = response.data.filename;
+          console.log(this.newListing.productFile)
+          this.$swal("Success!", `Product file uploaded`, "success");
+        }
+      } catch (err) {
+        this.$swal("Oops!", `File type must be: .jpg . jpeg .png`, "error");
+      }
+    },
+    async handlePhotoFileUpload () {
+      try {
+        this.newListing.productPhotos = [];
+        this.productPhotos = this.$refs.photoFiles.files;
+        let formData = new FormData();
+        for (const i of Object.keys(this.productPhotos)) {
+          formData.append('file', this.productPhotos[i])
+        }
+        let response = await this.$http.post('/listing/photos/upload',
+          formData,
+          {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+          }
+        )
+        var self = this;
+        if (response.status == 200) {
+          let html = ''
+          response.data.forEach(function(photo) {
+            self.newListing.productPhotos.push(photo.filename);
+            html += '<div class="col s6 m3 uploadedImage"><i class="material-icons grey darken-4 white-text" style="position: relative; top: 35px; left: -10; margin: 0px; padding: 5px;">delete</i><img class="responsive-img" src="http://localhost/uploads/' + photo.filename + '" /></div>';
+          })
+          console.log(this.newListing.productPhotos)
+          this.$swal("Success!", `Product file uploaded`, "success");
+
+          this.displayImageHTML = html;
+        }
+      } catch (err) {
+        this.$swal("Oops!", `File type must be: .jpg . jpeg .png, and limited to four photos`, "error");
       }
     },
     async submitListing() {
