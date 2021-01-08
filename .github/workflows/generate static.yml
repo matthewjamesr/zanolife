@@ -10,8 +10,6 @@ jobs:
     steps:
       - name: Checkout WWW branch
         uses: actions/checkout@v2
-        with:
-          ref: www
       - name: Build webpack
         uses: actions/setup-node@v2
         with:
