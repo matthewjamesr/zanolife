@@ -31,9 +31,18 @@ const routes = [
   {
     path: "/me",
     name: "profile",
-    component: () => import("../views/profile.vue"),
+    component: () => import("../views/user/profile.vue"),
     meta: {
       title: "Profile | Zano Life - Private Marketplace",
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/me/listings",
+    name: "userListings",
+    component: () => import("../views/user/listings.vue"),
+    meta: {
+      title: "My listings | Zano Life - Private Marketplace",
       requiresAuth: true
     }
   },
