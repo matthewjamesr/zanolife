@@ -11,7 +11,7 @@ jobs:
       - name: Checkout WWW branch
         uses: actions/checkout@v2
         with:
-          ref: my-branch
+          ref: www
       - name: Build webpack
         uses: actions/setup-node@v2
         with:
@@ -20,10 +20,10 @@ jobs:
       - name: Commit/Push WWW branch
         uses: actions/checkout@v2
         with:
-          ref: my-branch
+          ref: www
       - run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add .
+          git add -A
           git commit -m "generated new webpack"
           git push
