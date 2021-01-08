@@ -11,17 +11,15 @@ jobs:
       - name: Checkout master
         uses: actions/checkout@v2
       - name: Build webpack
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
           node-version: '12'
       - run: |
           npm i
           npm run build
-      - name: Commit/Push dist to master branch
-        uses: actions/checkout@v2
-      - run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add -A
-          git commit -m "generated new webpack"
+          git commit -m "Webpack generated"
           git push
