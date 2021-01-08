@@ -10,10 +10,14 @@ jobs:
     steps:
       - name: build and deploy
         uses: actions/checkout@v2
+        with:
+          ref: www
       - uses: actions/setup-node@v2
         with:
           node-version: '12'
       - run: |
+          git fetch origin
+          git merge origin/master
           npm i
           npm run build
           git config user.name github-actions
