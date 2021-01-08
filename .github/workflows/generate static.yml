@@ -3,23 +3,27 @@ name: Bundle Zanolife
 on:
   push:
     branches: [ master ]
-
+    
 jobs:
-  buildWebpack:
-    runs-on: ubuntu-latest
+  build-and-deploy:
+    runs-on: ubuntu-16.04
     steps:
-      - name: Build webpack
-        with:
-          script: |
-            npm run build
-            
-      - name: Push to branch
+      - name: Checkout WWW branch
         uses: actions/checkout@v2
         with:
-          script: |
-            git config user.name github-actions
-            git config user.email github-actions@github.com
-            git add .
-            git commit -m "Webpack generated"
-            git push
-            
+          ref: my-branch
+      - name: Build webpack
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+      - run: npm run build
+      - name: Commit/Push WWW branch
+        uses: actions/checkout@v2
+        with:
+          ref: my-branch
+      - run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "generated new webpack"
+          git push
