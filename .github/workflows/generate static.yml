@@ -17,7 +17,7 @@ jobs:
           npm i
           npm run build
           mkdir docs
-          mv dist/* /docs
+          mv dist/* docs
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add -A
