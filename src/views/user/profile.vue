@@ -113,7 +113,7 @@
                     <button class="waves-effect waves-dark btn grey lighten-4 black-text fullWidth">Sales</button>
                   </div>
                   <div class="col s12 m6">
-                    <button class="waves-effect waves-dark btn grey lighten-4 black-text fullWidth">Listings</button>
+                    <router-link class="waves-effect waves-dark btn grey lighten-4 black-text fullWidth" to="/me/listings">Listings</router-link>
                   </div>
                 </div>
               </div>
@@ -269,10 +269,7 @@ export default {
         self.count = 0;
         this.listingCount = response.data.length;
         response.data.forEach(function(listing) {
-          listing.purchasers.forEach(function() {
-            console.log("Sale found")
-            self.count++;
-          })
+          self.count += listing.purchases.count;
         });
         this.salesCount = self.count;
 
