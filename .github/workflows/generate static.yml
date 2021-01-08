@@ -8,7 +8,7 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-16.04
     steps:
-      - name: Checkout WWW branch
+      - name: Checkout master
         uses: actions/checkout@v2
       - name: Build webpack
         uses: actions/setup-node@v2
@@ -17,10 +17,8 @@ jobs:
       - run: |
           npm i
           npm run build
-      - name: Commit/Push WWW branch
+      - name: Commit/Push dist to master branch
         uses: actions/checkout@v2
-        with:
-          ref: www
       - run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
