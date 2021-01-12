@@ -14,9 +14,11 @@
     "jquery": "^3.5.1",
     "material-design-icons": "^3.0.1",
     "materialize-css": "^1.0.0-rc.2",
+    "qrcode": "^1.4.4",
     "sweetalert": "^2.1.2",
     "vue": "^2.6.11",
     "vue-jwt-decode": "^0.1.0",
+    "vue-qrcode": "^0.3.5",
     "vue-router": "^3.4.9",
     "vue-swal": "^1.0.0"
   },

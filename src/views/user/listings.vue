@@ -55,14 +55,47 @@
       <div class="container">
         <div class="row">
           <div class="col s12" v-for="(listing, index) in listings.data" :key="index">
-            <div class="card-panel listing light blue white-text">
+            <div class="card-panel listing grey darken-4 white-text">
               <div class="row mainRow">
-                <div class="col s8 m4 offset-s2">
+                <!--<div class="col m2 hide-on-small-only" v-if="listing.productPhotos != null">
                   <img class="primaryImage responsive-img" :src="'https://api.zano.life/uploads/' + listing.productPhotos[0]">
+                </div>-->
+                <div class="col s12">
+                  <div class="row">
+                    <div class="col s12">
+                      <div class="title" style="margin-bottom: 0px;">{{listing.title}}</div>
+                      <p>{{listing.description}}</p>
+                    </div>
+                  </div>
+                  <div class="row mainRow details">
+                    <div class="col s12 m8">
+                      <ul style="margin-top: 0px;" v-if="listing.feePaid && listing.confirmations >= 10">
+                        <li><b>Confirmed:</b> Yes</li>
+                      </ul>
+                      <ul style="margin-top: 0px;" v-if="!listing.feePaid || listing.confirmations < 10">
+                        <li class="left"><b>Confirmed:</b> No!</li>
+                        <br>
+                        <li v-if="!listing.feePaid" class="left" style="word-break: break-word;"><b>Payment address (0.05 ZANO Remaining):</b> {{listing.payment_address}} </li>
+                        <li v-if="listing.feePaid && listing.confirmations < 10">{{listing.confirmations}} of 10 confirmations</li>
+                      </ul>
+                      <ul style="display: inline;">
+                        <li><b>Price:</b> ${{listing.price}}</li>
+                        <li><b>Completed Sales:</b> {{listing.purchases.count}}</li>
+                        <li><b>Pending Sales:</b> {{listing.purchases.pending}}</li>
+                      </ul>
+                    </div>
+                    <div class="s12 m4">
+                      <vue-qrcode v-if="!listing.feePaid" class="hide-on-small-only qrcode" v-bind:value="listing.payment_address" scale="3" margin="2"/>
+                    </div>
+                  </div>
                 </div>
-                <div class="col s12 m8">
-                  <div class="title center-align">{{listing.title}}</div>
-                  <p>{{listing.description}}</p>
+              </div>
+              <div class="row">
+                <div class="col s12 actions">
+                  <div class="col s12">
+                    <router-link class="btn waves-effect waves-light btn purple accent-2 right" :to="'/listings/'+listing._id+'/edit'">Edit</router-link>
+                    <button class="btn waves-effect waves-light btn red accent-3 right" v-on:click="deleteListing(listing._id)">Delete</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -74,11 +107,13 @@
 </template>
 <script>
 import VueJwtDecode from "vue-jwt-decode";
+import VueQrcode from 'vue-qrcode';
 import Navigation from "@/components/shared/navigation";
 
 export default {
   components: {
-    Navigation
+    Navigation,
+    VueQrcode
   },
   data() {
     return {
@@ -125,7 +160,7 @@ export default {
 
         var self = this;
         response.data.forEach(function(listing) {
-          if (listing.feePaid == true && parseInt(listing.confirmations) >= 8) {
+          if (listing.feePaid == true && listing.confirmations >= 10) {
             self.listings.active++;
           } else {
             self.listings.pending++;
@@ -138,6 +173,24 @@ export default {
         window.$("#pendingCount").css("display", "block");
         window.$("#active-spinner").css("display", "none");
         window.$("#pending-spinner").css("display", "none");
+      } catch (err) {
+        this.$swal("Error", err, "error");
+        console.log(err.response);
+      }
+    },
+    async deleteListing(id) {
+      try {
+        console.log(id)
+        let response = await this.$http.post(`/listing/${id}/delete`, {
+            ownerAddress: this.user.paymentAddress
+        });
+
+        if (response.status == 200) {
+          this.$router.go();
+        }
+        if (response.status == 404) {
+          this.$swal("Error", 'Something went wrong', "error");
+        }
       } catch (err) {
         this.$swal("Error", err, "error");
         console.log(err.response);
@@ -245,8 +298,7 @@ export default {
   }
 
   .listing .primaryImage {
-    width: 100%;
-    height: 150px;
+    border-radius: 5px;
   }
 
   .listing .title {
@@ -255,6 +307,29 @@ export default {
   }
 
   .listing p {
+    margin: 0px;
     font-size: 14pt;
+  }
+
+  .listing ul li {
+    display: inline;
+    margin-right: 15px;
+    font-size: 12pt;
+    margin-bottom: 10px;
+  }
+
+  .qrcode {
+    width: 150px;
+  }
+
+  .actions {
+    border-top: 1px solid #424242;
+    margin-top: 25px;
+    padding: 15px 0px 15px 0px;
+    margin-bottom: -40px;
+  }
+
+  .actions .btn {
+    margin-left: 10px;
   }
 </style>
