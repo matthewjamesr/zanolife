@@ -12,6 +12,8 @@ const base = axios.create({
   baseURL: "https://api.zano.life/"
 });
 
+const socket = "ws://localhost/live";
+
 base.interceptors.request.use(
   (config) => {
     let token = localStorage.getItem('jwt');
@@ -29,6 +31,7 @@ base.interceptors.request.use(
 );
 
 Vue.prototype.$http = base;
+Vue.prototype.$socket = socket;
 Vue.config.productionTip = false;
 
 new Vue({

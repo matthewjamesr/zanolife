@@ -73,7 +73,7 @@
                         <li><b>Confirmed:</b> Yes</li>
                       </ul>
                       <ul style="margin-top: 0px;" v-if="!listing.feePaid || listing.confirmations < 10">
-                        <li class="left"><b>Confirmed:</b> No!</li>
+                        <li class=""><b>Confirmed:</b> No!</li>
                         <br>
                         <li v-if="!listing.feePaid" class="left" style="word-break: break-word;"><b>Payment address (0.05 ZANO Remaining):</b> {{listing.payment_address}} </li>
                         <li v-if="listing.feePaid && listing.confirmations < 10">{{listing.confirmations}} of 10 confirmations</li>
@@ -124,8 +124,9 @@ export default {
         data: [],
         active: 0,
         pending: 0
-      }
-    };
+      },
+      connection: null
+    }
   },
   methods: {
     getUserDetails() {
@@ -176,6 +177,12 @@ export default {
       } catch (err) {
         this.$swal("Error", err, "error");
         console.log(err.response);
+      }
+
+      if (this.listings.pending > 0) {
+        setTimeout(function () {
+          self.getUserListings();
+        }, 10000);
       }
     },
     async deleteListing(id) {
