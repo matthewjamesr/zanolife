@@ -79,7 +79,7 @@
                         <li v-if="listing.feePaid && listing.confirmations < 10">{{listing.confirmations}} of 10 confirmations</li>
                       </ul>
                       <ul style="display: inline;">
-                        <li><b>Price:</b> ${{listing.price}}</li>
+                        <li><b>Price:</b> {{listing.price}} ZANO</li>
                         <li><b>Completed Sales:</b> {{listing.purchases.count}}</li>
                         <li><b>Pending Sales:</b> {{listing.purchases.pending}}</li>
                       </ul>
@@ -94,6 +94,7 @@
                 <div class="col s12 actions">
                   <div class="col s12">
                     <router-link class="btn waves-effect waves-light btn purple accent-2 right" :to="'/listings/'+listing._id+'/edit'">Edit</router-link>
+                    <router-link class="btn waves-effect waves-light btn grey lighten-4 black-text right" :to="'/listings/'+listing._id">View</router-link>
                     <button class="btn waves-effect waves-light btn red accent-3 right" v-on:click="deleteListing(listing._id)">Delete</button>
                   </div>
                 </div>
