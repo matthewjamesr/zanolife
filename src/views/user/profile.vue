@@ -162,7 +162,7 @@
           <div class="row">
             <div class="input-field col s12 m4">
               <input id="price" type="text" v-model="newListing.price">
-              <label for="price">Price USD</label>
+              <label for="price">Price in ZANO</label>
             </div>
             <div class="input-field col s12 m8">
               <textarea id="description" class="materialize-textarea" data-length="240" v-model="newListing.description"></textarea>
