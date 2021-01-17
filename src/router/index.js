@@ -47,6 +47,15 @@ const routes = [
     }
   },
   {
+    path: "/listings/:id",
+    name: "listing",
+    component: () => import("../views/listings/listing.vue"),
+    meta: {
+      title: "Listing | Zano Life - Private Marketplace",
+      requiresAuth: false
+    }
+  },
+  {
     path: "/:catchAll(.*)",
     component: NotFound,
   },
